@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead5c06fb090add4caa49ca255e9cde2, type: 3}
+  m_Name: Item 1001
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemType: 1
+  itemId: 2000
+  itemName: "\uB9C8\uBC95\uC9C0\uD321\uC774"
+  itemDesc: "\uCD08\uBCF4\uC790\uAC00 \uC4F0\uAE30 \uC88B\uC740 \uB9C8\uBC95\uC9C0\uD321\uC774"
+  itemIcon: {fileID: 0}
+  baseDamage: 3
+  baseAttackRate: 1
+  baseAttackRange: 0
+  baseSpeed: 5
+  baseCount: 1
+  basePiercing: 1
+  projectile: {fileID: 5041136495070328561, guid: 82cd06ada1dab9c4985a312beb4f5bfc, type: 3}
+  hand: {fileID: 3540144678184933533, guid: fefd3ce51bb789e45a8d59548df486b1, type: 3}
+  damages: []
+  attackRate: []
