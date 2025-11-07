@@ -1,3 +1,4 @@
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -5,7 +6,7 @@ using UnityEngine.XR;
 public class Player : MonoBehaviour
 {
     public Vector2 inputVec;
-    public float speed;
+    public float speed; //기본 이동속도
     public Hand[] hands;
     public Scanner scanner;
 
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer spriter;
     Animator anim;
-
+    PlayerStats stats;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
         scanner = GetComponent<Scanner>();
         anim = GetComponent<Animator>();
         hands = GetComponentsInChildren<Hand>(true);
+        stats = GetComponent<PlayerStats>();
     }
 
     void OnMove(InputValue value)
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
 
-        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
+        Vector2 nextVec = inputVec * Time.fixedDeltaTime * Mathf.Clamp( (speed + (stats.agility/10) ),0,10);
         //3. 위치 이동
         rigid.MovePosition(rigid.position + nextVec);
     }
@@ -46,6 +48,17 @@ public class Player : MonoBehaviour
         {
             spriter.flipX = inputVec.x < 0;
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!collision.transform.CompareTag("Enemy"))
+            return;
+
+        stats.TakeDamage(collision.gameObject.GetComponent<Enemy>().attackPower);
+
+       
+
     }
 
 }

@@ -6,21 +6,25 @@ public abstract class Weapon : MonoBehaviour
     public int weaponId;
     //public int prefabId;
     public string weaponName;
-    public float damage;
+    public float attackPower;
     public float attackRate;
     
     protected float nextAttackTime;
-    public Player player;
+    protected Player player;
+
+    protected PlayerStats playerStats;
+
 
     public abstract void Attack();
 
     public abstract void Init(ItemData data);
-
+    protected abstract void DealDamage(Enemy target);
 
 
     protected virtual void Start()
     {
         nextAttackTime = 0.0f;
+        playerStats = GameManager.instance.player.GetComponent<PlayerStats>();
     }
 
     protected bool CanAttack()
@@ -32,6 +36,8 @@ public abstract class Weapon : MonoBehaviour
     {
         nextAttackTime = Time.time + 1f / attackRate;
     }
+
+   
 
     
 

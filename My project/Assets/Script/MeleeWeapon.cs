@@ -26,14 +26,16 @@ public class MeleeWeapon : Weapon
 
         //Property Set
         weaponId = data.itemId;
-        damage = data.baseDamage;
+        attackPower = data.baseAttackPower;
         attackRate = data.baseAttackRate;
         attackRange = data.baseAttackRange;
         hitLayer = data.hitLayer;
 
+
         //Hand Set
         Hand hand = player.hands[(int)data.itemType];
         hand.spriter.sprite = data.hand;
+        hand.anim.runtimeAnimatorController = data.weaponAnimCon;
     }
 
 
@@ -50,9 +52,10 @@ public class MeleeWeapon : Weapon
 
         Collider2D hit = Physics2D.OverlapBox(boxCenter, boxSize, 0f, hitLayer);
 
+        //일단 이게 기본 공격
         if (hit != null && hit.CompareTag("Enemy"))
         {
-            hit.GetComponent<Enemy>().health -= damage;
+            DealDamage(hit.GetComponent<Enemy>());
             Debug.Log("Melee Hit!");
         }
 
@@ -76,5 +79,12 @@ public class MeleeWeapon : Weapon
         Gizmos.DrawCube(boxCenter, boxSize);
     }
 
+
+    protected override void DealDamage(Enemy target)
+    {
+        float totalDamage = attackPower + playerStats.strength;
+
+        target.TakeDamage(totalDamage);
+    }
 
 }

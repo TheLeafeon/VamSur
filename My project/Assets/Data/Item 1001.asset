@@ -17,13 +17,17 @@ MonoBehaviour:
   itemName: "\uB9C8\uBC95\uC9C0\uD321\uC774"
   itemDesc: "\uCD08\uBCF4\uC790\uAC00 \uC4F0\uAE30 \uC88B\uC740 \uB9C8\uBC95\uC9C0\uD321\uC774"
   itemIcon: {fileID: 0}
-  baseDamage: 3
+  baseAttackPower: 0
   baseAttackRate: 1
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 64
   baseAttackRange: 0
   baseSpeed: 5
   baseCount: 1
   basePiercing: 1
   projectile: {fileID: 5041136495070328561, guid: 82cd06ada1dab9c4985a312beb4f5bfc, type: 3}
   hand: {fileID: 3540144678184933533, guid: fefd3ce51bb789e45a8d59548df486b1, type: 3}
+  weaponAnimCon: {fileID: 9100000, guid: 10231f26fe12a6e429d437ab13fab29b, type: 2}
   damages: []
   attackRate: []

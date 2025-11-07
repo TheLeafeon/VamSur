@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: "\uAE30\uBCF8 \uAC80"
   itemDesc: "\uCD08\uBCF4\uC790\uAC00 \uC4F0\uAE30 \uC88B\uC740 \uAC80"
   itemIcon: {fileID: 0}
-  baseDamage: 5
+  baseAttackPower: 5
   baseAttackRate: 1
   hitLayer:
     serializedVersion: 2
@@ -28,5 +28,6 @@ MonoBehaviour:
   basePiercing: 0
   projectile: {fileID: 0}
   hand: {fileID: 219350219241575109, guid: 8f1a6fee24da2c04eb7947a846f5bf55, type: 3}
+  weaponAnimCon: {fileID: 9100000, guid: 10231f26fe12a6e429d437ab13fab29b, type: 2}
   damages: []
   attackRate: []

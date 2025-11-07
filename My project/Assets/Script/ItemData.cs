@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptble Object/ItemData")]
@@ -16,7 +17,7 @@ public class ItemData : ScriptableObject
     public Sprite itemIcon;
 
     [Header("# Common Weapon Info")]
-    public float baseDamage;
+    public float baseAttackPower;
     public float baseAttackRate;
     public LayerMask hitLayer;
 
@@ -31,6 +32,7 @@ public class ItemData : ScriptableObject
     [Header("# Weapon")]
     public GameObject projectile;
     public Sprite hand;
+    public RuntimeAnimatorController weaponAnimCon;
 
     //없어질 수도 있음
     [Header("# Level Data")]

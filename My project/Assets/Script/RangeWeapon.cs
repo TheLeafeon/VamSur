@@ -21,6 +21,7 @@ public class RangeWeapon : Weapon
 
     public override void Init(ItemData data)
     {
+        player = GameManager.instance.player;
         //Basic Set
         name = "Weapon" + data.itemId;
         transform.parent = player.transform;
@@ -28,11 +29,14 @@ public class RangeWeapon : Weapon
 
         //Property Set
         weaponId = data.itemId;
-        damage = data.baseDamage;
+        attackPower = data.baseAttackPower;
         attackRate = data.baseAttackRate;
         speed = data.baseSpeed;
         count = data.baseCount;
         piercing = data.basePiercing;
+        hitLayer = data.hitLayer;
+
+
 
 
         for (int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
@@ -46,7 +50,9 @@ public class RangeWeapon : Weapon
 
 
         //Hand Set
-        Hand hand = player.hands[(int)data.itemType];
+       
+        //왼손 고정하는 방법 추가 필요, 0은 하드코딩
+        Hand hand = player.hands[0];
         hand.spriter.sprite = data.hand;
 
 
@@ -68,11 +74,15 @@ public class RangeWeapon : Weapon
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
-        bullet.GetComponent<Bullet>().Init(damage, speed, piercing, dir);
+        bullet.GetComponent<Bullet>().Init(attackPower, speed, piercing, dir);
 
         SetNextAttackTime();
 
     }
 
 
+    protected override void DealDamage(Enemy target)
+    {
+        Debug.Log("Range Weapon Deal Damage ");
+    }
 }

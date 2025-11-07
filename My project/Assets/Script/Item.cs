@@ -7,22 +7,49 @@ public class Item : MonoBehaviour
     public MeleeWeapon meleeWeapon;
     public RangeWeapon rangeWeapon;
 
+    public int level;
+
 
     public void OnClick()
     {
         switch(data.itemType)
         {
             case ItemData.ItemType.Melee:
-                GameObject newMeleeWeapon = new GameObject();
 
-                meleeWeapon = newMeleeWeapon.AddComponent<MeleeWeapon>();
-                meleeWeapon.Init(data);
+                if(level == 0)
+                {
+                    GameObject newMeleeWeapon = new GameObject();
+
+                    meleeWeapon = newMeleeWeapon.AddComponent<MeleeWeapon>();
+                    meleeWeapon.Init(data);
+
+
+                }
+                else
+                {
+                    Debug.Log("Melee Level Up!");
+                }
+
+
+                level++;
+
+
                 break;
             case ItemData.ItemType.Range:
-                GameObject newRangeWeapon = new GameObject();
+                if(level == 0)
+                {
+                    GameObject newRangeWeapon = new GameObject();
 
-                rangeWeapon = newRangeWeapon.AddComponent<RangeWeapon>();
-                rangeWeapon.Init(data);
+                    rangeWeapon = newRangeWeapon.AddComponent<RangeWeapon>();
+                    rangeWeapon.Init(data);
+                }
+                else
+                {
+                    Debug.Log("Range Level Up!");
+                }
+
+                level++;
+
                 break;
 
                

@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
+    [Header("# Enemy Info")]
     public float health;
     public float maxHealth;
+    public float attackPower;
+    public int dropExp;
 
 
 
@@ -31,6 +33,21 @@ public class Enemy : MonoBehaviour
                 Debug.Log("Range hit");
                 break;
 
+        }
+    }
+
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if(health <= 0)
+        {
+            Debug.Log("Enemy Dead");
+
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp(dropExp);
+
+            gameObject.SetActive(false);
         }
     }
 }
