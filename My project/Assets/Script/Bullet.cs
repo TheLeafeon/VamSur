@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage;
-    public float speed;
-    public int piercing;
+    [SerializeField]
+    float damage;
+    [SerializeField]
+    float speed;
+    [SerializeField]
+    int piercing;
 
     Rigidbody2D rigid;
 
@@ -30,6 +33,8 @@ public class Bullet : MonoBehaviour
         if (!collision.CompareTag("Enemy"))
             return;
 
+        collision.GetComponent<Enemy>().TakeDamage(damage);
+
         piercing--;
 
         if(piercing <0)
@@ -45,4 +50,6 @@ public class Bullet : MonoBehaviour
             return;
         gameObject.SetActive(false);
     }
+
+
 }

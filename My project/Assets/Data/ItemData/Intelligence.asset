@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ead5c06fb090add4caa49ca255e9cde2, type: 3}
-  m_Name: Item 1000
+  m_Name: Intelligence
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemType: 0
-  itemId: 1000
-  itemName: "\uAE30\uBCF8 \uAC80"
-  itemDesc: "\uCD08\uBCF4\uC790\uAC00 \uC4F0\uAE30 \uC88B\uC740 \uAC80"
-  itemIcon: {fileID: 0}
-  baseAttackPower: 5
-  baseAttackRate: 1
+  itemId: 2
+  itemName: "\uC9C0\uB2A5+1"
+  itemDesc: "\uB9C8\uBC95\uACF5\uACA9\uB825 \uC99D\uAC00\n\uAD00\uD1B5\uB825 \uC99D\uAC00"
+  itemIcon: {fileID: 7939660048056292410, guid: 6eef7cadfff68df4bb55518bde57564c, type: 3}
+  damageType: 0
+  baseAttackPower: 0
+  baseAttackRate: 0
   hitLayer:
     serializedVersion: 2
-    m_Bits: 64
-  baseAttackRange: 3
+    m_Bits: 0
+  itemFirstDesc: 
+  isLefthand: 0
+  hand: {fileID: 0}
+  weaponAnimCon: {fileID: 0}
+  baseAttackRange: 0
+  projectile: {fileID: 0}
   baseSpeed: 0
   baseCount: 0
   basePiercing: 0
-  projectile: {fileID: 0}
-  hand: {fileID: 219350219241575109, guid: 8f1a6fee24da2c04eb7947a846f5bf55, type: 3}
-  weaponAnimCon: {fileID: 9100000, guid: 10231f26fe12a6e429d437ab13fab29b, type: 2}
-  damages: []
-  attackRate: []

@@ -12,6 +12,7 @@ public class PlayerStats : MonoBehaviour
     public int agility=1; //공격속도 / 이동속도
     public int intelligence=1; //마법공격력 / 공격범위  아직은 사용하지 않을 예정
 
+
     private void Awake()
     {
         

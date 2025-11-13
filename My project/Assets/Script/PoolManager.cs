@@ -1,10 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PoolCategory
+{
+    Enemy, Projectile, Effect
+}
+[System.Serializable]
+public class PoolGroup
+{
+    public PoolCategory category;
+    public GameObject[] prefabs;
+}
 public class PoolManager : MonoBehaviour
 {
-    // 프리팹을 보관할 변수
 
+    public PoolGroup[] poolGroups;
+
+
+    // 프리팹을 보관할 변수
     public GameObject[] prefabs;
 
     // 풀을 담당하는 리스트
@@ -20,7 +33,6 @@ public class PoolManager : MonoBehaviour
             pools[index] = new List<GameObject>();
         }
 
-        Debug.Log(pools.Length);
     }
 
     public GameObject Get(int index)

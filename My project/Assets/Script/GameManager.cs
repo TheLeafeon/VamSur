@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player player;
     public PoolManager pool;
+    public LevelUp uiLevelUp;
 
     private void Awake()
     {
@@ -43,14 +45,16 @@ public class GameManager : MonoBehaviour
             exp += extraExp;
 
             player.GetComponent<PlayerStats>().playerLevel++;
-            Debug.Log("레벨업!");
+            level++;
+            uiLevelUp.Show();
         }
         else if(exp == nextExp[nowLevel])
         {
             //정해진 경험치에 맞는 경우
             exp = 0;
             player.GetComponent<PlayerStats>().playerLevel++;
-            Debug.Log("레벨업!");
+            level++;
+            uiLevelUp.Show();
         }
 
 

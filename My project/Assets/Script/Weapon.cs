@@ -15,10 +15,14 @@ public abstract class Weapon : MonoBehaviour
     protected PlayerStats playerStats;
 
 
-    public abstract void Attack();
+
 
     public abstract void Init(ItemData data);
+    public abstract void Attack();
+
+    public abstract void LevelUp();
     protected abstract void DealDamage(Enemy target);
+    
 
 
     protected virtual void Start()
@@ -37,7 +41,13 @@ public abstract class Weapon : MonoBehaviour
         nextAttackTime = Time.time + 1f / attackRate;
     }
 
-   
+   protected void HandSet(ItemData data)
+    {
+        player = GameManager.instance.player;
+
+        Hand hand = player.hands[data.isLefthand ? 0 : 1];
+        hand.spriter.sprite = data.hand;
+    }
 
     
 

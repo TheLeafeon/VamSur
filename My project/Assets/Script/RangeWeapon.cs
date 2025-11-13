@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
@@ -10,7 +12,7 @@ public class RangeWeapon : Weapon
     public int piercing;
     public int prefabId;
     public LayerMask hitLayer;
-
+    public bool isPhysical;
 
 
 
@@ -21,6 +23,7 @@ public class RangeWeapon : Weapon
 
     public override void Init(ItemData data)
     {
+        Debug.Log("원거리 아이템 장착");
         player = GameManager.instance.player;
         //Basic Set
         name = "Weapon" + data.itemId;
@@ -29,15 +32,23 @@ public class RangeWeapon : Weapon
 
         //Property Set
         weaponId = data.itemId;
-        attackPower = data.baseAttackPower;
         attackRate = data.baseAttackRate;
+        attackPower = data.baseAttackPower;
         speed = data.baseSpeed;
         count = data.baseCount;
         piercing = data.basePiercing;
         hitLayer = data.hitLayer;
-
-
-
+        
+        switch(data.damageType)
+        {
+            case ItemData.DamageType.Physical:
+                isPhysical = true;
+                break;
+            case ItemData.DamageType.Magical:
+                isPhysical = false;
+                break;
+        }
+        
 
         for (int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
         {
@@ -48,14 +59,7 @@ public class RangeWeapon : Weapon
             }
         }
 
-
-        //Hand Set
-       
-        //왼손 고정하는 방법 추가 필요, 0은 하드코딩
-        Hand hand = player.hands[0];
-        hand.spriter.sprite = data.hand;
-
-
+        HandSet(data);
     }
 
     public override void Attack()
@@ -65,24 +69,95 @@ public class RangeWeapon : Weapon
         if (!player.scanner.nearestTarget)
             return;
 
-        Vector3 targetPos = player.scanner.nearestTarget.position;
-        Vector3 dir = targetPos - transform.position;
-        dir = dir.normalized;
+        
+        switch(weaponId)
+        {
+            case 2000:
+                StartCoroutine("Attack2000");
+                break;
+            case 3000:
+                Attack3000();
+                break;
+            
+        }
 
-        Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
 
-        bullet.position = transform.position;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-
-        bullet.GetComponent<Bullet>().Init(attackPower, speed, piercing, dir);
 
         SetNextAttackTime();
 
     }
+    
+    
+    private IEnumerator Attack2000()
+    {
+        float totaldamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
 
+        Vector3 targetPos = player.scanner.nearestTarget.position;
+        Vector3 dir = targetPos - transform.position;
+        dir = dir.normalized;
+
+        float shotDelay = 0.1f;
+
+        for(int i=0;i<count;i++)
+        {
+            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+
+            bullet.position = transform.position;
+            bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+
+            bullet.GetComponent<Bullet>().Init(totaldamage, speed, piercing, dir);
+
+
+            yield return new WaitForSeconds(shotDelay);
+        }
+    }
+
+    private void Attack3000()
+    {
+        float totaldamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
+
+        Vector3 targetPos = player.scanner.nearestTarget.position;
+        Vector3 dir = targetPos - transform.position;
+        dir = dir.normalized;
+
+        float spreadAngle = 60f; // 전체 퍼짐 각도 (예: 30도)
+        int middleIndex = count / 2; // 중앙 발의 인덱스
+
+        for (int i = 0; i < count; i++)
+        {
+            // 중앙을 기준으로 각도를 부여 (좌우 대칭)
+            float angle = (i - middleIndex) * (spreadAngle / (count - 1));
+            Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
+            Vector3 spreadDir = rot * dir;
+
+            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+
+            bullet.position = transform.position;
+            bullet.rotation = Quaternion.FromToRotation(Vector3.up, spreadDir);
+
+            bullet.GetComponent<Bullet>().Init(
+                attackPower + playerStats.strength, speed, piercing, spreadDir);
+        }
+    }
+
+    public override void LevelUp()
+    {
+        switch(weaponId)
+        {
+            case 2000:
+                attackPower += 3.0f;
+                attackRate += 0.1f;
+                break;
+            case 3000:
+                attackPower += 3.0f;
+                if (count < 5)
+                    count++;
+                break;
+        }
+    }
 
     protected override void DealDamage(Enemy target)
     {
-        Debug.Log("Range Weapon Deal Damage ");
+        
     }
 }

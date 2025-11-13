@@ -4,7 +4,7 @@ public class Hand : MonoBehaviour
 {
     public bool isLeft;
     public SpriteRenderer spriter;
-    public Animator anim;
+    //public Animator anim;
 
     Vector3 leftPos = new Vector3(-0.4f, -0.2f, 0);
     Vector3 leftPosReverse = new Vector3(0.4f, -0.2f, 0);
@@ -18,7 +18,7 @@ public class Hand : MonoBehaviour
     private void Awake()
     {
         player = GetComponentsInParent<SpriteRenderer>()[1];
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
     }
 
     private void LateUpdate()

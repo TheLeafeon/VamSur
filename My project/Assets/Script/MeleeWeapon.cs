@@ -5,6 +5,7 @@ public class MeleeWeapon : Weapon
     [Header("Melee Setting")]
     public float attackRange;
     public LayerMask hitLayer;
+    public bool isPhysical;
 
 
     Vector2 direction;
@@ -31,11 +32,17 @@ public class MeleeWeapon : Weapon
         attackRange = data.baseAttackRange;
         hitLayer = data.hitLayer;
 
+        switch (data.damageType)
+        {
+            case ItemData.DamageType.Physical:
+                isPhysical = true;
+                break;
+            case ItemData.DamageType.Magical:
+                isPhysical = false;
+                break;
+        }
 
-        //Hand Set
-        Hand hand = player.hands[(int)data.itemType];
-        hand.spriter.sprite = data.hand;
-        hand.anim.runtimeAnimatorController = data.weaponAnimCon;
+        HandSet(data);
     }
 
 
@@ -47,7 +54,8 @@ public class MeleeWeapon : Weapon
 
         direction = player != null && player.flipX ? Vector2.left : Vector2.right;
 
-        Vector2 boxSize = new Vector2(attackRange, 1f);
+        //공격 범위
+        Vector2 boxSize = new Vector2(attackRange, (1f+attackRange/10));
         Vector2 boxCenter = (Vector2)transform.position + direction * (attackRange / 2);
 
         Collider2D hit = Physics2D.OverlapBox(boxCenter, boxSize, 0f, hitLayer);
@@ -64,25 +72,37 @@ public class MeleeWeapon : Weapon
     }
 
 
-
-
-    private void OnDrawGizmosSelected()
+    public override void LevelUp()
     {
-        SpriteRenderer player = GetComponentsInParent<SpriteRenderer>()[0];
-
-        //1f는 언제든 수정 가능 범위가 증가함에 따라 이또한 커질 수 있음
-        Vector2 boxSize = new Vector2(attackRange, 1f);
-        Vector3 boxCenter = transform.position + (Vector3)(direction * attackRange / 2);
-
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(boxCenter, boxSize);
+        switch(weaponId)
+        {
+            case 1000:
+                attackPower += 3.0f;
+                break;
+        }
     }
+
+
+
+
+    // 공격 범위 보여주기용 기즈모
+    //private void OnDrawGizmosSelected()
+    //{
+    //    SpriteRenderer player = GetComponentsInParent<SpriteRenderer>()[0];
+
+    //    //1f는 언제든 수정 가능 범위가 증가함에 따라 이또한 커질 수 있음
+    //    Vector2 boxSize = new Vector2(attackRange, 1f);
+    //    Vector3 boxCenter = transform.position + (Vector3)(direction * attackRange / 2);
+
+
+    //    Gizmos.color = Color.magenta;
+    //    Gizmos.DrawCube(boxCenter, boxSize);
+    //}
 
 
     protected override void DealDamage(Enemy target)
     {
-        float totalDamage = attackPower + playerStats.strength;
+        float totalDamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
 
         target.TakeDamage(totalDamage);
     }
