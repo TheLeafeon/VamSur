@@ -50,9 +50,9 @@ public class RangeWeapon : Weapon
         }
         
 
-        for (int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
+        for (int index = 0; index < GameManager.instance.projectilePool.prefabs.Length; index++)
         {
-            if (data.projectile == GameManager.instance.pool.prefabs[index])
+            if (data.projectile == GameManager.instance.projectilePool.prefabs[index])
             {
                 prefabId = index;
                 break;
@@ -100,7 +100,7 @@ public class RangeWeapon : Weapon
 
         for(int i=0;i<count;i++)
         {
-            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+            Transform bullet = GameManager.instance.projectilePool.Get(prefabId).transform;
 
             bullet.position = transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
@@ -130,7 +130,7 @@ public class RangeWeapon : Weapon
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
             Vector3 spreadDir = rot * dir;
 
-            Transform bullet = GameManager.instance.pool.Get(prefabId).transform;
+            Transform bullet = GameManager.instance.projectilePool.Get(prefabId).transform;
 
             bullet.position = transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, spreadDir);

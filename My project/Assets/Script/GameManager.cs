@@ -5,11 +5,23 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    
+    [Header("Player")]
+    public Player player;
+    public int playerId; //나중에 시작 캐릭터 종류 다양해질때 사용
 
+    [Header("Managers")]
+    public PoolManager projectilePool;
+    public PoolManager enemyPool;
+    //public Spawner spawner;
 
-    [Header("# Player Info")]
-    public  int playerId; //나중에 시작 캐릭터 종류 다양해질때 사용
+    [Header("Game Time")]
+    public float gameTime;     // 현재 플레이 시간
+    public float maxGameTime = 600f; // 예: 10분 생존
+
+    [Header("# Game State")]
+    public bool isLive;
+
+    [Header("# Progress")]
     public int level;
     public int kill;
     public int exp;
@@ -17,10 +29,7 @@ public class GameManager : MonoBehaviour
     public float health;
     public float maxHealth=100;
 
-
-    [Header("# Game Object")]
-    public Player player;
-    public PoolManager pool;
+    [Header("# Game UI")]
     public LevelUp uiLevelUp;
 
     private void Awake()
@@ -28,6 +37,17 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         Application.targetFrameRate = 60;
+    }
+
+    private void Update()
+    {
+        gameTime += Time.deltaTime;
+
+        // 게임 종료 조건 (원하면 수정 가능)
+        if (gameTime >= maxGameTime)
+        {
+            Debug.Log("Game Clear!!");
+        }
     }
 
     public void GetExp(int dropExp)

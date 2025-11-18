@@ -1,53 +1,67 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public  class Enemy : MonoBehaviour
 {
-    [Header("# Enemy Info")]
-    public float health;
+    [Header("# Common Enemy Info")]
+    public string enemyName;
     public float maxHealth;
+    public float currentHealth;
+    public float speed;
     public float attackPower;
     public int dropExp;
 
+    protected float nextAttackTime;
 
 
-    Rigidbody2D rigid;
-    Collider2D coll;
+    public EnemyData data;
 
-    private void Awake()
+    Transform player;
+    EnemyBehavior behavior;
+
+    public void OnEnable()
     {
-        rigid = GetComponent<Rigidbody2D>();
-        coll = GetComponent<Collider2D>();
-
-        health = maxHealth;
+        
+        OnSpawn();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnSpawn()
     {
-        switch(collision.tag)
-        {
-            case "Melee":
-                //health -= collision.GetComponent<MeleeWeapon>().damage;
-                break;
+        player = GameManager.instance.player.transform;
+        currentHealth = data.maxHealth;
+        enemyName = data.enemyName;
+        maxHealth = data.maxHealth;
+        speed = data.speed;
+        attackPower = data.attackPower;
+        dropExp = data.dropExp;
 
-            case "Bullet":
-                Debug.Log("Range hit");
-                break;
+        behavior = GetComponent<EnemyBehavior>();
+
+        if (behavior != null)
+        {
+            behavior.Init(this, player);
 
         }
     }
 
-
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if(health <= 0)
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
             Debug.Log("Enemy Dead");
 
             GameManager.instance.kill++;
             GameManager.instance.GetExp(dropExp);
 
+            Dead();
             gameObject.SetActive(false);
         }
     }
+
+    void Dead()
+    {
+
+    }
+
 }

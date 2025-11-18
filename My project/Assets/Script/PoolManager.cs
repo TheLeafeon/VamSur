@@ -1,21 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PoolCategory
-{
-    Enemy, Projectile, Effect
-}
-[System.Serializable]
-public class PoolGroup
-{
-    public PoolCategory category;
-    public GameObject[] prefabs;
-}
+
 public class PoolManager : MonoBehaviour
 {
-
-    public PoolGroup[] poolGroups;
-
 
     // 프리팹을 보관할 변수
     public GameObject[] prefabs;
