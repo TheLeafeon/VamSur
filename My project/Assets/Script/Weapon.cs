@@ -38,7 +38,8 @@ public abstract class Weapon : MonoBehaviour
 
     protected void SetNextAttackTime()
     {
-        nextAttackTime = Time.time + 1f / attackRate;
+        float totalAttackRate = attackRate + ((float)GameManager.instance.player.GetComponent<PlayerStats>().agility / 10.0f);
+        nextAttackTime = Time.time + 1f / totalAttackRate;
     }
 
    protected void HandSet(ItemData data)

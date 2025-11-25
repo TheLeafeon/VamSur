@@ -56,7 +56,22 @@ public class Item : MonoBehaviour
         switch(data.itemType)
         {
             case ItemData.ItemType.State:
-                Debug.Log("Click State!");
+                switch(data.stateType)
+                {
+                    case ItemData.StateType.Strength:
+                        GameManager.instance.player.GetComponent<PlayerStats>().strength++;
+                        GameManager.instance.player.GetComponent<PlayerStats>().TotalMaxHealth();
+                        break;
+                    case ItemData.StateType.Agility:
+                        GameManager.instance.player.GetComponent<PlayerStats>().agility++;
+                        GameManager.instance.player.GetComponent<Player>().speedUpdate();
+                        break;
+                    case ItemData.StateType.Intelligence:
+                        GameManager.instance.player.GetComponent<PlayerStats>().intelligence++;
+                        break;
+                }
+
+
 
                 break;
 

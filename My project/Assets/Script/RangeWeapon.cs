@@ -18,6 +18,8 @@ public class RangeWeapon : Weapon
 
     private void Update()
     {
+        if (!GameManager.instance.isLive)
+            return;
         Attack();
     }
 
@@ -136,7 +138,7 @@ public class RangeWeapon : Weapon
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, spreadDir);
 
             bullet.GetComponent<Bullet>().Init(
-                attackPower + playerStats.strength, speed, piercing, spreadDir);
+                totaldamage, speed, piercing, spreadDir);
         }
     }
 

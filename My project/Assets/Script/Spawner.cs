@@ -21,6 +21,9 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.isLive)
+            return;
+
         timer += Time.deltaTime;
         //level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / levelTime))
         level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / levelTime), waveData.Length - 1);

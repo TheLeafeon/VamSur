@@ -12,6 +12,8 @@ public class MeleeWeapon : Weapon
 
     private void Update()
     {
+        if (!GameManager.instance.isLive)
+            return;
         Attack();
         
     }

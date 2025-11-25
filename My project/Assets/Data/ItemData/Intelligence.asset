@@ -17,6 +17,7 @@ MonoBehaviour:
   itemName: "\uC9C0\uB2A5+1"
   itemDesc: "\uB9C8\uBC95\uACF5\uACA9\uB825 \uC99D\uAC00\n\uAD00\uD1B5\uB825 \uC99D\uAC00"
   itemIcon: {fileID: 7939660048056292410, guid: 6eef7cadfff68df4bb55518bde57564c, type: 3}
+  stateType: 2
   damageType: 0
   baseAttackPower: 0
   baseAttackRate: 0

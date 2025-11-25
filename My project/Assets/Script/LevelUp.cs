@@ -3,8 +3,8 @@ using UnityEngine;
 public class LevelUp : MonoBehaviour
 {
     RectTransform rect;
-    Item[] items;
-
+    public Item[] items;
+    public Item[] startWeapons;
 
     private void Awake()
     {
@@ -24,6 +24,13 @@ public class LevelUp : MonoBehaviour
 
 
 
+    }
+
+    public void StartWeapon()
+    {
+        int random = Random.Range(0, startWeapons.Length);
+
+        startWeapons[random].OnClick();
     }
 
     public void Hide()

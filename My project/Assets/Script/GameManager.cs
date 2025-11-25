@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game UI")]
     public LevelUp uiLevelUp;
 
+
     private void Awake()
     {
         instance = this;
@@ -79,5 +80,24 @@ public class GameManager : MonoBehaviour
 
 
     }
-
+    public void GameStart()
+    {
+        isLive = true;
+        player.gameObject.SetActive(true);
+        uiLevelUp.StartWeapon();
+    }
+    public void GameStop()
+    {
+        isLive =false;
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        isLive = true;
+        Time.timeScale = 1;
+    }
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
 }

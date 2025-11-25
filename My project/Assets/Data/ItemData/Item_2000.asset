@@ -18,7 +18,7 @@ MonoBehaviour:
   itemDesc: "\uB370\uBBF8\uC9C0 \uC99D\uAC00\n\uACF5\uACA9\uC18D\uB3C4 \uC99D\uAC00"
   itemIcon: {fileID: -4879230903120597399, guid: b9f518c709f237d43bd20680538d906f, type: 3}
   damageType: 0
-  baseAttackPower: 1
+  baseAttackPower: 100
   baseAttackRate: 1
   hitLayer:
     serializedVersion: 2

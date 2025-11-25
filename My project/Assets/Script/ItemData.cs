@@ -7,6 +7,7 @@ public class ItemData : ScriptableObject
 
 
     public enum ItemType {State, Melee, Range}
+    public enum StateType { Strength, Agility, Intelligence }
     public enum DamageType { Physical, Magical }
 
     [Header("#Main Info")]
@@ -18,6 +19,8 @@ public class ItemData : ScriptableObject
     public string itemDesc;
     public Sprite itemIcon;
 
+    [Header("# State Info")]
+    public StateType stateType;
 
 
     [Header("# Common Weapon Info")]
