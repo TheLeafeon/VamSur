@@ -67,17 +67,12 @@ public class Player : MonoBehaviour
 
     public void speedUpdate()
     {
-
-
         //speed = Mathf.Clamp((speed + (stats.agility / 10)), 0, 10);
 
         speed += 0.1f;
 
         if (speed > 10.0f)
             speed = 10.0f;
-
-
-         
 
         Debug.Log("변경된 스피드" +speed);
     }

@@ -4,16 +4,15 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     public ItemData data;
-    public MeleeWeapon meleeWeapon;
-    public RangeWeapon rangeWeapon;
-
-
+    public Weapon weapon;
     public int level;
 
     Image icon;
     Text textName;
     Text textFirstDesc;
     Text textDesc;
+
+    Player player;
 
     private void Awake()
     {
@@ -27,7 +26,10 @@ public class Item : MonoBehaviour
 
         textName.text = data.itemName;
     }
-
+    private void Start()
+    {
+        player = GameManager.instance.player;
+    }
     private void OnEnable()
     {
         switch(data.itemType)
@@ -35,8 +37,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.State:
                 textDesc.text = string.Format(data.itemDesc);
                 break;
-            case ItemData.ItemType.Melee:
-            case ItemData.ItemType.Range:
+            case ItemData.ItemType.Weapon:
                 if(level == 0)
                 {
                     textDesc.text = string.Format(data.itemFirstDesc);
@@ -59,63 +60,48 @@ public class Item : MonoBehaviour
                 switch(data.stateType)
                 {
                     case ItemData.StateType.Strength:
-                        GameManager.instance.player.GetComponent<PlayerStats>().strength++;
-                        GameManager.instance.player.GetComponent<PlayerStats>().TotalMaxHealth();
+                        player.GetComponent<PlayerStats>().strength++;
+                        player.GetComponent<PlayerStats>().TotalMaxHealth();
                         break;
                     case ItemData.StateType.Agility:
-                        GameManager.instance.player.GetComponent<PlayerStats>().agility++;
-                        GameManager.instance.player.GetComponent<Player>().speedUpdate();
+                        player.GetComponent<PlayerStats>().agility++;
+                        player.GetComponent<Player>().speedUpdate();
                         break;
                     case ItemData.StateType.Intelligence:
-                        GameManager.instance.player.GetComponent<PlayerStats>().intelligence++;
+                        player.GetComponent<PlayerStats>().intelligence++;
                         break;
                 }
-
-
-
                 break;
 
-            case ItemData.ItemType.Melee:
-
+            case ItemData.ItemType.Weapon:
                 if(level == 0)
                 {
-                    GameObject newMeleeWeapon = new GameObject();
-
-                    meleeWeapon = newMeleeWeapon.AddComponent<MeleeWeapon>();
-                    meleeWeapon.Init(data);
+                    EquipWeapon();
+                    weapon.Init(data);
                 }
                 else
                 {
-                    Debug.Log("Melee Level Up!");
-                    meleeWeapon.LevelUp();
+                    weapon.LevelUp();
                 }
-
                 level++;
 
-                break;
-            case ItemData.ItemType.Range:
-                if(level == 0)
-                {
-                    GameObject newRangeWeapon = new GameObject();
-
-                    rangeWeapon = newRangeWeapon.AddComponent<RangeWeapon>();
-                    rangeWeapon.Init(data);
-                }
-                else
-                {
-                    Debug.Log("Range Level Up!");
-                    rangeWeapon.LevelUp();
-                }
-
-                level++;
-
-                break;
-
-               
-
-
-                
+                break;   
         }
             
+    }
+
+    private void EquipWeapon()
+    {
+        GameObject newWeapon = new GameObject();
+        switch (data.weaponType)
+        {
+            case ItemData.WeaponType.Melee:
+                weapon = newWeapon.AddComponent<MeleeWeapon>();
+
+                break;
+            case ItemData.WeaponType.Range:
+                weapon = newWeapon.AddComponent<RangeWeapon>();
+                break;
+        }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStats : MonoBehaviour
 {
-    public int playerLevel;
+    public int playerLevel ;
     public float maxHealth;
     public float currentHealth;
     public float defense;

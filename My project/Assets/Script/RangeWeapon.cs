@@ -14,13 +14,13 @@ public class RangeWeapon : Weapon
     public LayerMask hitLayer;
     public bool isPhysical;
 
-
-
     private void Update()
     {
         if (!GameManager.instance.isLive)
             return;
+
         Attack();
+        NonTargetAttack();
     }
 
     public override void Init(ItemData data)
@@ -34,6 +34,7 @@ public class RangeWeapon : Weapon
 
         //Property Set
         weaponId = data.itemId;
+        weaponLevel = 1;
         attackRate = data.baseAttackRate;
         attackPower = data.baseAttackPower;
         speed = data.baseSpeed;
@@ -51,18 +52,25 @@ public class RangeWeapon : Weapon
                 break;
         }
         
-
-        for (int index = 0; index < GameManager.instance.projectilePool.prefabs.Length; index++)
+        for (int index = 0; index < GameManager.instance.weaponPool.prefabs.Length; index++)
         {
-            if (data.projectile == GameManager.instance.projectilePool.prefabs[index])
+            if (data.bullet == GameManager.instance.weaponPool.prefabs[index])
             {
                 prefabId = index;
                 break;
             }
         }
 
+
+        switch (weaponId)
+        {
+            case 2002:
+                Batch();
+                break;
+        }
         HandSet(data);
     }
+
 
     public override void Attack()
     {
@@ -71,25 +79,36 @@ public class RangeWeapon : Weapon
         if (!player.scanner.nearestTarget)
             return;
 
-        
-        switch(weaponId)
+
+        switch (weaponId)
         {
             case 2000:
+            case 2003:
                 StartCoroutine("Attack2000");
+                SetNextAttackTime();
                 break;
-            case 3000:
-                Attack3000();
+            case 2001:
+                Attack2001();
+                SetNextAttackTime();
                 break;
-            
+
+
         }
+    }
 
+    public override void NonTargetAttack()
+    {
+        if (!CanAttack()) return;
 
-
-        SetNextAttackTime();
-
+        switch(weaponId)
+        {
+            case 2002:
+                transform.Rotate(Vector3.forward * speed * Time.deltaTime);
+                break;
+        }
     }
     
-    
+
     private IEnumerator Attack2000()
     {
         float totaldamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
@@ -102,19 +121,22 @@ public class RangeWeapon : Weapon
 
         for(int i=0;i<count;i++)
         {
-            Transform bullet = GameManager.instance.projectilePool.Get(prefabId).transform;
+            Transform bullet = GameManager.instance.weaponPool.Get(prefabId).transform;
 
             bullet.position = transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
-            bullet.GetComponent<Bullet>().Init(totaldamage, speed, piercing, dir);
+            bullet.GetComponent<Bullet>().Init(totaldamage, speed, piercing, dir,weaponLevel);
 
 
-            yield return new WaitForSeconds(shotDelay);
+            if(count > 1)
+            {
+                yield return new WaitForSeconds(shotDelay);
+            }
         }
     }
 
-    private void Attack3000()
+    private void Attack2001()
     {
         float totaldamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
 
@@ -132,28 +154,65 @@ public class RangeWeapon : Weapon
             Quaternion rot = Quaternion.AngleAxis(angle, Vector3.forward);
             Vector3 spreadDir = rot * dir;
 
-            Transform bullet = GameManager.instance.projectilePool.Get(prefabId).transform;
+            Transform bullet = GameManager.instance.weaponPool.Get(prefabId).transform;
 
             bullet.position = transform.position;
             bullet.rotation = Quaternion.FromToRotation(Vector3.up, spreadDir);
 
             bullet.GetComponent<Bullet>().Init(
-                totaldamage, speed, piercing, spreadDir);
+                totaldamage, speed, piercing, spreadDir, weaponLevel);
+        }
+    }
+
+    public  void Batch()
+    {
+        
+
+        for (int index = 0; index < count; index++)
+        {
+            Transform bullet;
+            if (index < transform.childCount)
+            {
+                bullet = transform.GetChild(index);
+            }
+            else
+            {
+                bullet = GameManager.instance.weaponPool.Get(prefabId).transform;
+                bullet.parent = transform;
+            }
+
+            //불렛의 로컬 위치, 각도 초기화
+            bullet.localPosition = Vector3.zero;
+            bullet.localRotation = Quaternion.identity;
+
+            Vector3 rotVec = Vector3.forward * 360 * index / count;
+            bullet.Rotate(rotVec);
+            bullet.Translate(bullet.up * 1.5f, Space.World);
+
+            bullet.GetComponent<Bullet>().Init(1, speed, piercing, Vector3.zero, weaponLevel); // -100 is Infinity Per;
+
         }
     }
 
     public override void LevelUp()
     {
-        switch(weaponId)
+        weaponLevel++;
+        switch (weaponId)
         {
             case 2000:
                 attackPower += 3.0f;
                 attackRate += 0.1f;
                 break;
-            case 3000:
+            case 2001:
                 attackPower += 3.0f;
                 if (count < 5)
                     count++;
+                break;
+            case 2002:
+                attackPower += 3.0f;
+                if (count < 5)
+                    count++;
+                Batch();
                 break;
         }
     }

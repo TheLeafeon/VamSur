@@ -24,7 +24,7 @@ public class StateUI : MonoBehaviour
         switch(type)
         {
             case InfoType.Level:
-                myText.text = string.Format("Lv.{0:F0}", GameManager.instance.player.GetComponent<PlayerStats>().playerLevel);
+                myText.text = string.Format("Lv.{0:F0}", GameManager.instance.player.GetComponent<PlayerStats>().playerLevel +1 );
                 break;
             case InfoType.Health:
                 myText.text = string.Format("{0:F0}", GameManager.instance.player.GetComponent<PlayerStats>().maxHealth);

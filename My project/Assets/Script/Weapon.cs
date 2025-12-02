@@ -8,17 +8,16 @@ public abstract class Weapon : MonoBehaviour
     public string weaponName;
     public float attackPower;
     public float attackRate;
-    
+    public int weaponLevel;
     protected float nextAttackTime;
     protected Player player;
 
     protected PlayerStats playerStats;
 
 
-
-
     public abstract void Init(ItemData data);
     public abstract void Attack();
+    public abstract void NonTargetAttack();
 
     public abstract void LevelUp();
     protected abstract void DealDamage(Enemy target);

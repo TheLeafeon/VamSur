@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead5c06fb090add4caa49ca255e9cde2, type: 3}
+  m_Name: Item_2003
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemType: 1
+  itemId: 2003
+  itemName: "\uBD88\uC9C0\uD321\uC774"
+  itemDesc: "\uB370\uBBF8\uC9C0 \uC99D\uAC00\n\uD654\uC5FC\uC9C0\uB300 \uD06C\uAE30
+    \uC99D\uAC00"
+  itemIcon: {fileID: 3714177497955810525, guid: 328ae1533156cc04a95eb8afefa767fb, type: 3}
+  stateType: 0
+  weaponType: 1
+  damageType: 1
+  baseAttackPower: 10
+  baseAttackRate: 0.3
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  itemFirstDesc: "\uD654\uC5FC\uB9C8\uBC95\uC744 \uC4F8 \uC218 \uC788\uB294 \uB9C8\uBC95\uC9C0\uD321\uC774"
+  isLefthand: 1
+  hand: {fileID: 1560608358752100459, guid: 8e76c2eeac357234fa3395ad71f2a57f, type: 3}
+  weaponAnimCon: {fileID: 0}
+  baseAttackRange: 0
+  bullet: {fileID: 5081942680878845258, guid: 08f6bdfa561619544bdb326a5ca9e089, type: 3}
+  baseSpeed: 3
+  baseCount: 1
+  basePiercing: 0
+  DamageArea: {fileID: 284745078197151148, guid: c09bb414543dac0428d26caefcfee8f1, type: 3}
+  baseAreaSize: 3
+  baseAreaTime: 5
+  baseAreaDamage: 2
+  baseDamageCoolTime: 0.5

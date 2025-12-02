@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public int playerId; //나중에 시작 캐릭터 종류 다양해질때 사용
 
     [Header("Managers")]
-    public PoolManager projectilePool;
+    public PoolManager weaponPool;
     public PoolManager enemyPool;
     //public Spawner spawner;
 
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
     public int exp;
-    public int[] nextExp = { 3, 5, 10, 100, 150, 210, 280, 360, 450, 600 };
+    public int nextExp;
     public float health;
     public float maxHealth=100;
 
@@ -56,25 +56,31 @@ public class GameManager : MonoBehaviour
         //여러번 쓰일꺼라서 변수 하나 사용
         int nowLevel = player.GetComponent<PlayerStats>().playerLevel;
         exp += dropExp;
-        if(exp > nextExp[nowLevel])
+        if(exp > nextExp)
         {
+            level++;
             //초과 경험치 경우
-            int extraExp = exp - nextExp[nowLevel];
+            int extraExp = exp - nextExp;
+
+            SetNextExp();
 
             exp = 0;
 
             exp += extraExp;
 
             player.GetComponent<PlayerStats>().playerLevel++;
-            level++;
+            
             uiLevelUp.Show();
         }
-        else if(exp == nextExp[nowLevel])
+        else if(exp == nextExp)
         {
+            level++;
+            SetNextExp();
+
             //정해진 경험치에 맞는 경우
             exp = 0;
             player.GetComponent<PlayerStats>().playerLevel++;
-            level++;
+            
             uiLevelUp.Show();
         }
 
@@ -99,5 +105,17 @@ public class GameManager : MonoBehaviour
     public void GameQuit()
     {
         Application.Quit();
+    }
+
+    void SetNextExp()
+    { 
+        if (level % 5 == 0)
+        {
+            nextExp += 15;
+        }
+        else
+        {
+            nextExp += 5;
+        }
     }
 }

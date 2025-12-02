@@ -73,9 +73,14 @@ public class MeleeWeapon : Weapon
         
     }
 
+    public override void NonTargetAttack()
+    {
+        
+    }
 
     public override void LevelUp()
     {
+        weaponLevel++;
         switch(weaponId)
         {
             case 1000:

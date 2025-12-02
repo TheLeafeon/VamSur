@@ -3,20 +3,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    float damage;
+    protected float damage;
     [SerializeField]
-    float speed;
+    protected float speed;
     [SerializeField]
-    int piercing;
+    protected int piercing;
 
-    Rigidbody2D rigid;
+    protected Rigidbody2D rigid;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();    
     }
 
-    public void Init(float damage, float speed, int piercing, Vector3 dir )
+    public virtual void Init(float damage, float speed, int piercing, Vector3 dir ,int level)
     {
         this.damage = damage;
         this.speed = speed;
@@ -30,26 +30,34 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (!collision.CompareTag("Enemy"))
             return;
 
-        collision.GetComponent<Enemy>().TakeDamage(damage);
-
-        piercing--;
-
-        if(piercing <0)
-        {
-            rigid.linearVelocity = Vector2.zero;
-            gameObject.SetActive(false);
-        }
+        OnHitEnemy(collision.GetComponent<Enemy>());
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Area"))
+        if (!collision.CompareTag("Area") || piercing == -100)
             return;
         gameObject.SetActive(false);
     }
 
 
+    protected virtual void OnHitEnemy(Enemy enemy)
+    {
+        enemy.TakeDamage(damage);
+
+        if (piercing == -100)
+            return;
+
+        piercing--;
+
+        if (piercing < 0)
+        {
+            rigid.linearVelocity = Vector2.zero;
+            gameObject.SetActive(false);
+        }
+    }
 }
