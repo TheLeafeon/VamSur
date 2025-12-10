@@ -57,7 +57,7 @@ public class EffectBullet : Bullet
 
                 Transform area = GameManager.instance.weaponPool.Get(prefabId).transform;
                 area.position = transform.position;
-                area.GetComponent<DamageArea>().Init(itemData, damage, level);
+                area.GetComponent<DoTDamageArea>().Init(itemData, damage, level);
                 break;
         }
     }

@@ -2,23 +2,26 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    [Header("# Common Weapon Setting")]
-    public int weaponId;
-    //public int prefabId;
+    [Header("# Common Weapon Info")]
     public string weaponName;
+    public int weaponId;
+    public int weaponLevel;
+
+    [Header("# Common Weapon Setting")]
+    public bool isPhysical;
     public float attackPower;
     public float attackRate;
-    public int weaponLevel;
+    [SerializeField]
     protected float nextAttackTime;
-    protected Player player;
 
+    protected Player player;
+    protected LayerMask hitLayer;
     protected PlayerStats playerStats;
 
 
     public abstract void Init(ItemData data);
     public abstract void Attack();
     public abstract void NonTargetAttack();
-
     public abstract void LevelUp();
     protected abstract void DealDamage(Enemy target);
     

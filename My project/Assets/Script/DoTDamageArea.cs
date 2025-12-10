@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DamageArea : MonoBehaviour
+public class DoTDamageArea : MonoBehaviour
 {
-    [Header("# DoT Info")]
+    [Header("# DoTArea Info")]
     [SerializeField]
     float areaSize;
     [SerializeField]
@@ -16,7 +16,7 @@ public class DamageArea : MonoBehaviour
     float damageCoolTime;
 
 
-    private float time;
+    //private float time;
 
     private List<Enemy> enemies = new List<Enemy>();
 
@@ -33,7 +33,7 @@ public class DamageArea : MonoBehaviour
     public void Init(ItemData itemData, float damage, int level)
     {
         areaSize = itemData.baseAreaSize + (float)level / 10.0f;
-        this.damage = damage * itemData.baseAreaDamage;
+        this.damage = damage * itemData.damagePercent;
         areaTime = itemData.baseAreaTime;
         damageCoolTime = itemData.baseDamageCoolTime;
 

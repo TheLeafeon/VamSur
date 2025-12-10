@@ -6,13 +6,11 @@ using UnityEngine.XR;
 
 public class RangeWeapon : Weapon
 {
-    [Header("Range Setting")]
-    public float speed;
-    public int count;
-    public int piercing;
-    public int prefabId;
-    public LayerMask hitLayer;
-    public bool isPhysical;
+    [Header("# Range Setting")]
+    private float speed;
+    private int count;
+    private int piercing;
+    private int prefabId;
 
     private void Update()
     {

@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     [Header("# Game State")]
     public bool isLive;
+    public int equipWeapon;
 
     [Header("# Progress")]
     public int level;

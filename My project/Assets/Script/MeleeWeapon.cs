@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon
 {
-    [Header("Melee Setting")]
+    [Header("# Melee Setting")]
     public float attackRange;
-    public LayerMask hitLayer;
-    public bool isPhysical;
 
 
     Vector2 direction;

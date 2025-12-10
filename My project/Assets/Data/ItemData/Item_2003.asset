@@ -27,8 +27,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   itemFirstDesc: "\uD654\uC5FC\uB9C8\uBC95\uC744 \uC4F8 \uC218 \uC788\uB294 \uB9C8\uBC95\uC9C0\uD321\uC774"
-  isLefthand: 1
   hand: {fileID: 1560608358752100459, guid: 8e76c2eeac357234fa3395ad71f2a57f, type: 3}
+  isLefthand: 1
   weaponAnimCon: {fileID: 0}
   baseAttackRange: 0
   bullet: {fileID: 5081942680878845258, guid: 08f6bdfa561619544bdb326a5ca9e089, type: 3}
@@ -38,5 +38,5 @@ MonoBehaviour:
   DamageArea: {fileID: 284745078197151148, guid: c09bb414543dac0428d26caefcfee8f1, type: 3}
   baseAreaSize: 3
   baseAreaTime: 5
-  baseAreaDamage: 2
+  damagePercent: 0.2
   baseDamageCoolTime: 0.5

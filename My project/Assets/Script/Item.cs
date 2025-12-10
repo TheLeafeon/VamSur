@@ -40,6 +40,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Weapon:
                 if(level == 0)
                 {
+                    GameManager.instance.equipWeapon++;
                     textDesc.text = string.Format(data.itemFirstDesc);
                 }
                 else
@@ -101,6 +102,9 @@ public class Item : MonoBehaviour
                 break;
             case ItemData.WeaponType.Range:
                 weapon = newWeapon.AddComponent<RangeWeapon>();
+                break;
+            case ItemData.WeaponType.Explostion:
+                weapon = newWeapon.AddComponent<ExplostionWeapon>();
                 break;
         }
     }

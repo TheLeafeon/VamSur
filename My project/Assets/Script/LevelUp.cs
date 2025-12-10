@@ -5,7 +5,7 @@ public class LevelUp : MonoBehaviour
     RectTransform rect;
     public Item[] items;
     public Item[] startWeapons;
-
+    
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
@@ -29,7 +29,7 @@ public class LevelUp : MonoBehaviour
     public void StartWeapon()
     {
         int random = Random.Range(0, startWeapons.Length);
-
+        GameManager.instance.equipWeapon = 1;
         startWeapons[random].OnClick();
     }
 
@@ -55,6 +55,8 @@ public class LevelUp : MonoBehaviour
             random[1] = Random.Range(0, items.Length);
             random[2] = Random.Range(0, items.Length);
 
+
+            //선택지 3개가 겹치지 않을 때
             if (random[0] != random[1] && random[1] != random[2] && random[0] != random[2])
                 break;
             
