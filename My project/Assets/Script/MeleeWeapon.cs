@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleeWeapon : Weapon
@@ -7,6 +8,8 @@ public class MeleeWeapon : Weapon
 
 
     Vector2 direction;
+
+    private List<Enemy> enemies = new List<Enemy>();
 
     private void Update()
     {
@@ -31,6 +34,7 @@ public class MeleeWeapon : Weapon
         attackRate = data.baseAttackRate;
         attackRange = data.baseAttackRange;
         hitLayer = data.hitLayer;
+        
 
         switch (data.damageType)
         {
@@ -50,25 +54,14 @@ public class MeleeWeapon : Weapon
     {
         if (!CanAttack()) return;
         
-        SpriteRenderer player = GetComponentsInParent<SpriteRenderer>()[0];
-
-        direction = player != null && player.flipX ? Vector2.left : Vector2.right;
-
-        //공격 범위
-        Vector2 boxSize = new Vector2(attackRange, (1f+attackRange/10));
-        Vector2 boxCenter = (Vector2)transform.position + direction * (attackRange / 2);
-
-        Collider2D hit = Physics2D.OverlapBox(boxCenter, boxSize, 0f, hitLayer);
-
-        //일단 이게 기본 공격
-        if (hit != null && hit.CompareTag("Enemy"))
+        switch(weaponId)
         {
-            DealDamage(hit.GetComponent<Enemy>());
-            Debug.Log("Melee Hit!");
+            case 1000:
+                Attack1000();
+                SetNextAttackTime();
+                break;
         }
 
-        SetNextAttackTime();
-        
     }
 
     public override void NonTargetAttack()
@@ -87,10 +80,37 @@ public class MeleeWeapon : Weapon
         }
     }
 
+    private void Attack1000()
+    {
+        if (hand.isAttacking)
+            return;
+        float damage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
 
+        SpriteRenderer player = GetComponentsInParent<SpriteRenderer>()[0];
+        direction = player != null && player.flipX ? Vector2.left : Vector2.right;
 
+        //공격 범위
+        Vector2 boxSize = new Vector2(attackRange, (1f + attackRange / 10));
+        Vector2 boxCenter = (Vector2)transform.position + direction * (attackRange / 2);
 
-    // 공격 범위 보여주기용 기즈모
+        Collider2D[] hits = Physics2D.OverlapBoxAll(boxCenter, boxSize, 0f, hitLayer);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (!hits[i].CompareTag("Enemy"))
+                continue;
+
+            hand.AttackAnimTrigger();
+
+            Enemy enemy = hits[i].GetComponent<Enemy>();
+            if (enemy == null || !enemy.isLive)
+                continue;
+
+            enemy.TakeDamage(damage, true);
+        }
+    }
+
+    //// 공격 범위 보여주기용 기즈모
     //private void OnDrawGizmosSelected()
     //{
     //    SpriteRenderer player = GetComponentsInParent<SpriteRenderer>()[0];
@@ -103,13 +123,5 @@ public class MeleeWeapon : Weapon
     //    Gizmos.color = Color.magenta;
     //    Gizmos.DrawCube(boxCenter, boxSize);
     //}
-
-
-    protected override void DealDamage(Enemy target)
-    {
-        float totalDamage = attackPower + (isPhysical ? playerStats.strength : playerStats.intelligence);
-
-        target.TakeDamage(totalDamage);
-    }
 
 }

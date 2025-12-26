@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
-    public bool isLeft;
+    public bool leftHand;
+    public bool isAttacking;
     public SpriteRenderer spriter;
-    //public Animator anim;
+    public Animator anim;
 
     Vector3 leftPos = new Vector3(-0.4f, -0.2f, 0);
     Vector3 leftPosReverse = new Vector3(0.4f, -0.2f, 0);
@@ -18,14 +19,18 @@ public class Hand : MonoBehaviour
     private void Awake()
     {
         player = GetComponentsInParent<SpriteRenderer>()[1];
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
+    
     private void LateUpdate()
     {
+        if (isAttacking)
+            return;
+
         bool isReverse = player.flipX;
 
-        if(isLeft)
+        if (leftHand)
         {
             transform.localPosition = isReverse ? leftPosReverse : leftPos;
             spriter.flipX = isReverse;
@@ -38,8 +43,32 @@ public class Hand : MonoBehaviour
             spriter.sortingOrder = isReverse ? 6 : 4;
         }
 
-
-            
-
     }
+
+    
+    public void AttackAnimTrigger()
+    {
+        isAttacking = true;
+
+        if (player.flipX)
+        {
+            //왼쪽을 공격
+            Debug.Log("Left Attack");
+            anim.SetTrigger("LeftAttack");
+        }
+        else
+        {
+            //오른쪽을 공격
+            Debug.Log("Right Attack");
+            anim.SetTrigger("RightAttack");
+        }
+            
+        
+    }
+
+    public void AttackEnd()
+    {
+        isAttacking=false;
+    }
+
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -14,6 +15,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField]
     protected float nextAttackTime;
 
+    protected Hand hand;
     protected Player player;
     protected LayerMask hitLayer;
     protected PlayerStats playerStats;
@@ -23,9 +25,6 @@ public abstract class Weapon : MonoBehaviour
     public abstract void Attack();
     public abstract void NonTargetAttack();
     public abstract void LevelUp();
-    protected abstract void DealDamage(Enemy target);
-    
-
 
     protected virtual void Start()
     {
@@ -48,8 +47,13 @@ public abstract class Weapon : MonoBehaviour
     {
         player = GameManager.instance.player;
 
-        Hand hand = player.hands[data.isLefthand ? 0 : 1];
+        hand = player.hands[data.isLefthand ? 0 : 1];
         hand.spriter.sprite = data.hand;
+        if(data.weaponAnimCon != null)
+        {
+            hand.anim.runtimeAnimatorController = data.weaponAnimCon;
+        }
+        
     }
 
     

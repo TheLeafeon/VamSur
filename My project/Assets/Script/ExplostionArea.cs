@@ -12,11 +12,11 @@ public class ExplostionArea : MonoBehaviour
     [SerializeField]
     float areaTime;
 
-    private List<Enemy> enemies = new List<Enemy>();
+    HashSet<Enemy> hitEnemies = new HashSet<Enemy>();
 
     private void OnEnable()
     {
-        StartCoroutine(AreaLifeTime());
+        hitEnemies.Clear();
     }
 
     public void Init(float size, float damage, float areaTime)
@@ -25,7 +25,8 @@ public class ExplostionArea : MonoBehaviour
         this.damage = damage;
         this.areaTime = areaTime;
 
-        transform.localScale = new Vector3(areaSize, areaSize, areaSize);
+        transform.localScale = Vector3.one * areaSize;
+        StartCoroutine(AreaLifeTime());
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,25 +35,19 @@ public class ExplostionArea : MonoBehaviour
             return;
 
         Enemy enemy = collision.GetComponent<Enemy>();
+        if (enemy == null || !enemy.isLive)
+            return;
 
-        //enemy.TakeDamage(damage);
-
-        if (!enemies.Contains(enemy))
-            enemies.Add(enemy);
-
-        for (int i = 0; i < enemies.Count; i++)
+        if (hitEnemies.Add(enemy))
         {
-            if (enemies[i] != null) // 죽었거나 비활성화 되지 않았다면
-            {
-                Debug.Log("enemies" + i + "TakeDamage" + damage);
-                enemies[i].TakeDamage(damage);
-            }
+            enemy.TakeDamage(damage, true);
         }
     }
 
     IEnumerator AreaLifeTime()
     {
         yield return new WaitForSeconds(areaTime);
+        hitEnemies.Clear();
         gameObject.SetActive(false);
     }
 }

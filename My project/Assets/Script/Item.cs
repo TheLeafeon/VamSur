@@ -40,7 +40,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Weapon:
                 if(level == 0)
                 {
-                    GameManager.instance.equipWeapon++;
+                    
                     textDesc.text = string.Format(data.itemFirstDesc);
                 }
                 else
@@ -62,7 +62,7 @@ public class Item : MonoBehaviour
                 {
                     case ItemData.StateType.Strength:
                         player.GetComponent<PlayerStats>().strength++;
-                        player.GetComponent<PlayerStats>().TotalMaxHealth();
+                        player.GetComponent<PlayerStats>().MaxHealthUpdate();
                         break;
                     case ItemData.StateType.Agility:
                         player.GetComponent<PlayerStats>().agility++;
@@ -94,6 +94,7 @@ public class Item : MonoBehaviour
     private void EquipWeapon()
     {
         GameObject newWeapon = new GameObject();
+        GameManager.instance.equipWeapon++;
         switch (data.weaponType)
         {
             case ItemData.WeaponType.Melee:

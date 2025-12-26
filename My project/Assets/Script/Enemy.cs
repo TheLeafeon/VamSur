@@ -10,23 +10,23 @@ public  class Enemy : MonoBehaviour
     public float speed;
     public float attackPower;
     public int dropExp;
-
     protected float nextAttackTime;
 
-
+    public bool isLive;
     public EnemyData data;
 
     Transform player;
     EnemyBehavior behavior;
+    Animator anim;
 
-    public void OnEnable()
+    private void Awake()
     {
-        
-        OnSpawn();
+        anim = GetComponent<Animator>();
     }
-
-    public void OnSpawn()
+    private void OnEnable()
     {
+
+        // OnSpawn();
         player = GameManager.instance.player.transform;
         currentHealth = data.maxHealth;
         enemyName = data.enemyName;
@@ -34,34 +34,44 @@ public  class Enemy : MonoBehaviour
         speed = data.speed;
         attackPower = data.attackPower;
         dropExp = data.dropExp;
-
+        anim.runtimeAnimatorController = data.animator;
         behavior = GetComponent<EnemyBehavior>();
-
+        isLive = true;
         if (behavior != null)
         {
-            behavior.Init(this, player);
 
+            behavior.Init(this, player);
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isKnockBack)
     {
         currentHealth -= damage;
-        if (currentHealth <= 0)
+
+        if (currentHealth > 0 )
+        {
+            anim.SetTrigger("Hit");
+
+            if(isKnockBack)
+            {
+                StartCoroutine(behavior.KnockBack());
+            }
+        }
+        else
         {
             Debug.Log("Enemy Dead");
-
+            anim.SetBool("Dead", true);
             GameManager.instance.kill++;
             GameManager.instance.GetExp(dropExp);
+            isLive = false;
 
-            Dead();
-            gameObject.SetActive(false);
+            behavior.BehaviorDead();
         }
     }
 
     void Dead()
     {
-
+        gameObject.SetActive(false);
     }
 
 }

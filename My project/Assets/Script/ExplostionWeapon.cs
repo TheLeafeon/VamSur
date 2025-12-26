@@ -84,11 +84,6 @@ public class ExplostionWeapon : Weapon
     {
         
     }
-    protected override void DealDamage(Enemy target)
-    {
-        
-    }
-
     void Attack3000()
     {
         Transform damageArea = GameManager.instance.weaponPool.Get(prefabId).transform;
@@ -98,6 +93,5 @@ public class ExplostionWeapon : Weapon
 
         damageArea.GetComponent<ExplostionArea>().Init(areaSize, totaldamage, areaTime );
 
-        //damageArea.GetComponent<ExplostionArea>().Init();
     }
 }

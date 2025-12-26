@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class EnemyChase : EnemyBehavior
 {
-
-
     private void FixedUpdate()
     {
-        //if (!initialized) return;
+        //Debug.Log("EnemyChase.FixedUpdate isLive: " + enemy.isLive);
         if (!GameManager.instance.isLive)
+            return;
+        if (!enemy.isLive)
+            return;
+        if (isKnockback)
             return;
 
         Vector2 dirVec = (Vector2)player.position - rigid.position;
@@ -21,7 +23,8 @@ public class EnemyChase : EnemyBehavior
     {
         if (!GameManager.instance.isLive)
             return;
-        //if (!initialized) return;
+        if (!enemy.isLive)
+            return;
         FlipToPlayer();
     }
 }

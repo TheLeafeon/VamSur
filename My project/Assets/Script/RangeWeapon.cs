@@ -215,8 +215,4 @@ public class RangeWeapon : Weapon
         }
     }
 
-    protected override void DealDamage(Enemy target)
-    {
-        
-    }
 }

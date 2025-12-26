@@ -14,6 +14,7 @@ public class EnemyData : ScriptableObject
     public float speed;
     public float attackPower;
     public int dropExp;
+    public RuntimeAnimatorController animator;
 
     [Header("# Range Enmey Info")]
     public GameObject projectile;

@@ -18,6 +18,7 @@ MonoBehaviour:
   speed: 1
   attackPower: 4
   dropExp: 4
+  animator: {fileID: 22100000, guid: fbefdf9331b6faf4cb70dd4a8142219f, type: 2}
   projectile: {fileID: 0}
   attackRange: 0
   count: 0

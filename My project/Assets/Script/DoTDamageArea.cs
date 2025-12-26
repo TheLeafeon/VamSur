@@ -50,7 +50,7 @@ public class DoTDamageArea : MonoBehaviour
                 if (enemies[i] != null) // 죽었거나 비활성화 되지 않았다면
                 {
                     Debug.Log("enemies" + i + "TakeDamage" + damage);
-                    enemies[i].TakeDamage(damage);
+                    enemies[i].TakeDamage(damage, false);
                 }
             }
 

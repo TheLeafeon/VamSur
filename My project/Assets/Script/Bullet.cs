@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnHitEnemy(Enemy enemy)
     {
-        enemy.TakeDamage(damage);
+        enemy.TakeDamage(damage, true);
 
         if (piercing == -100)
             return;

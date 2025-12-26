@@ -3,27 +3,39 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
+/*
+ * 캐릭터의 이동,  애니메이션, 손
+ */
+[Tooltip("캐릭터의 이동, 애니메이션, 손")]
 public class Player : MonoBehaviour
 {
+
+    [Header("# 이동 관련")]
+    public float speed; //이동속도
     public Vector2 inputVec;
-    public float speed; //기본 이동속도
+    float baseSpeed;
+
+    [Header("# Hand 오브젝트 ")]
     public Hand[] hands;
+
+    [Header("# 몬스터 인식 범위 ")]
     public Scanner scanner;
 
 
     Rigidbody2D rigid;
     SpriteRenderer spriter;
-    Animator anim;
     PlayerStats stats;
+    PlayerAnimation anim;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         scanner = GetComponent<Scanner>();
-        anim = GetComponent<Animator>();
         hands = GetComponentsInChildren<Hand>(true);
         stats = GetComponent<PlayerStats>();
+        anim = GetComponent<PlayerAnimation>();
+        baseSpeed = speed;
     }
 
     void OnMove(InputValue value)
@@ -47,22 +59,15 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.instance.isLive)
             return;
+
         anim.SetFloat("Speed", inputVec.magnitude);
+
+
         if (inputVec.x != 0)
         {
             spriter.flipX = inputVec.x < 0;
+
         }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (!collision.transform.CompareTag("Enemy"))
-            return;
-
-        stats.TakeDamage(collision.gameObject.GetComponent<Enemy>().attackPower);
-
-       
-
     }
 
     public void speedUpdate()
@@ -77,4 +82,24 @@ public class Player : MonoBehaviour
         Debug.Log("변경된 스피드" +speed);
     }
 
+
+    public void PlayerSpawn()
+    {
+        stats.StatsReset();
+        speed = baseSpeed;
+        gameObject.SetActive(true);
+        anim.SetBool("Dead", false);
+    }
+
+    public void SetHandActive(bool isActive)
+    {
+        if (hands == null)
+            return;
+
+        for (int i = 0; i < hands.Length; i++)
+        {
+            if (hands[i] != null)
+                hands[i].gameObject.SetActive(isActive);
+        }
+    }
 }

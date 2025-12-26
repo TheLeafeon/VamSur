@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd84e660cfd39e4690bd1c8417a9082, type: 3}
   m_Name: Enemy_0
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyType: 0
+  prefabId: 0
   enemyName: "\uCD08\uB85D \uC2AC\uB77C\uC784"
   maxHealth: 10
   speed: 2
   attackPower: 1
   dropExp: 1
+  animator: {fileID: 9100000, guid: 168207ba58558c94d9913336ef4f2aaa, type: 2}
   projectile: {fileID: 0}
   attackRange: 0
   count: 0

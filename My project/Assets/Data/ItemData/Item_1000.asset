@@ -17,18 +17,25 @@ MonoBehaviour:
   itemName: "\uCD08\uBCF4\uC790\uC758 \uAC80"
   itemDesc: "\uB370\uBBF8\uC9C0 \uC99D\uAC00\n"
   itemIcon: {fileID: 7859929478225895348, guid: 93e37f0dd10044f4394572106024bcd9, type: 3}
+  stateType: 0
+  weaponType: 0
   damageType: 0
-  baseAttackPower: 100
+  baseAttackPower: 1
   baseAttackRate: 1
   hitLayer:
     serializedVersion: 2
     m_Bits: 64
   itemFirstDesc: "\uCD08\uBCF4\uC790\uAC00 \uC4F0\uAE30 \uC88B\uC740 \uAC80"
-  isLefthand: 1
   hand: {fileID: 219350219241575109, guid: 8f1a6fee24da2c04eb7947a846f5bf55, type: 3}
-  weaponAnimCon: {fileID: 9100000, guid: 10231f26fe12a6e429d437ab13fab29b, type: 2}
+  isLefthand: 1
+  weaponAnimCon: {fileID: 9100000, guid: d3fb4dd33837e5e459488f20e51319c2, type: 2}
   baseAttackRange: 3
-  projectile: {fileID: 0}
+  bullet: {fileID: 0}
   baseSpeed: 0
   baseCount: 0
   basePiercing: 0
+  DamageArea: {fileID: 0}
+  baseAreaSize: 0
+  baseAreaTime: 0
+  damagePercent: 0
+  baseDamageCoolTime: 0

@@ -27,11 +27,11 @@ public class GameManager : MonoBehaviour
     public int kill;
     public int exp;
     public int nextExp;
-    public float health;
-    public float maxHealth=100;
+    public int score=0;
 
     [Header("# Game UI")]
     public LevelUp uiLevelUp;
+    public GameObject uiGameOver;
 
 
     private void Awake()
@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     {
         //여러번 쓰일꺼라서 변수 하나 사용
         int nowLevel = player.GetComponent<PlayerStats>().playerLevel;
+
+        score += dropExp;
         exp += dropExp;
         if(exp > nextExp)
         {
@@ -89,9 +91,11 @@ public class GameManager : MonoBehaviour
     }
     public void GameStart()
     {
-        isLive = true;
-        player.gameObject.SetActive(true);
+        player.PlayerSpawn();
+        player.SetHandActive(true);
         uiLevelUp.StartWeapon();
+        isLive = true;
+        Time.timeScale = 1;
     }
     public void GameStop()
     {
@@ -107,6 +111,14 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+    public void GameOver()
+    {
+        //player.gameObject.SetActive(false);
+        Debug.Log("GameOver");
+        GameStop();
+        uiGameOver.SetActive(true);
+    }
+
 
     void SetNextExp()
     { 
