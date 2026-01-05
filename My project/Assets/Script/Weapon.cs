@@ -48,12 +48,17 @@ public abstract class Weapon : MonoBehaviour
         player = GameManager.instance.player;
 
         hand = player.hands[data.isLefthand ? 0 : 1];
+
+        if (hand.isEquip)
+            return;
+
         hand.spriter.sprite = data.hand;
-        if(data.weaponAnimCon != null)
+        
+        if (data.weaponAnimCon != null)
         {
             hand.anim.runtimeAnimatorController = data.weaponAnimCon;
         }
-        
+        hand.isEquip = true;
     }
 
     

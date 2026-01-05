@@ -4,6 +4,7 @@ public class Hand : MonoBehaviour
 {
     public bool leftHand;
     public bool isAttacking;
+    public bool isEquip;
     public SpriteRenderer spriter;
     public Animator anim;
 
@@ -20,6 +21,7 @@ public class Hand : MonoBehaviour
     {
         player = GetComponentsInParent<SpriteRenderer>()[1];
         anim = GetComponent<Animator>();
+        isEquip = false;
     }
 
     

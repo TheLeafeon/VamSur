@@ -12,6 +12,6 @@ public class ScoreUI : MonoBehaviour
 
     private void OnEnable()
     {
-        myText.text = string.Format("내 점수\n{0}", GameManager.instance.score);
+        myText.text = string.Format("내 점수\n{0}", GameManager.instance.nowScore);
     }
 }

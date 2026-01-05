@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     [Header("Managers")]
     public PoolManager weaponPool;
     public PoolManager enemyPool;
-    //public Spawner spawner;
+    public AchiveManager achiveManager;
 
     [Header("Game Time")]
     public float gameTime;     // 현재 플레이 시간
@@ -27,11 +28,14 @@ public class GameManager : MonoBehaviour
     public int kill;
     public int exp;
     public int nextExp;
-    public int score=0;
+    public int bestScore;
+    public int nowScore=0;
+    public int EquipWeaponCnt=0;
 
     [Header("# Game UI")]
     public LevelUp uiLevelUp;
     public GameObject uiGameOver;
+    public Transform uiJoy;
 
 
     private void Awake()
@@ -57,7 +61,7 @@ public class GameManager : MonoBehaviour
         //여러번 쓰일꺼라서 변수 하나 사용
         int nowLevel = player.GetComponent<PlayerStats>().playerLevel;
 
-        score += dropExp;
+        nowScore += dropExp;
         exp += dropExp;
         if(exp > nextExp)
         {
@@ -93,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         player.PlayerSpawn();
         player.SetHandActive(true);
+        uiJoy.localScale = Vector3.one;
         uiLevelUp.StartWeapon();
         isLive = true;
         Time.timeScale = 1;
@@ -101,11 +106,13 @@ public class GameManager : MonoBehaviour
     {
         isLive =false;
         Time.timeScale = 0;
+        uiJoy.localScale = Vector3.zero;
     }
     public void Resume()
     {
         isLive = true;
         Time.timeScale = 1;
+        uiJoy.localScale = Vector3.one;
     }
     public void GameQuit()
     {
@@ -113,10 +120,17 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        //player.gameObject.SetActive(false);
-        Debug.Log("GameOver");
+        if(nowScore > bestScore)
+        {
+            achiveManager.SaveBestScore();
+        }
+
         GameStop();
         uiGameOver.SetActive(true);
+    }
+    public void GameRetry()
+    {
+        SceneManager.LoadScene("SampleScene");
     }
 
 

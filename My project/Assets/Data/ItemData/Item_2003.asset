@@ -21,7 +21,7 @@ MonoBehaviour:
   stateType: 0
   weaponType: 1
   damageType: 1
-  baseAttackPower: 10
+  baseAttackPower: 5
   baseAttackRate: 0.3
   hitLayer:
     serializedVersion: 2

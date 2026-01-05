@@ -20,14 +20,14 @@ MonoBehaviour:
   stateType: 0
   weaponType: 1
   damageType: 0
-  baseAttackPower: 100
+  baseAttackPower: 5
   baseAttackRate: 1
   hitLayer:
     serializedVersion: 2
     m_Bits: 64
   itemFirstDesc: "\uCD08\uBCF4 \uC0AC\uC218\uAC00 \uC0AC\uC6A9\uD558\uB294 \uAD8C\uCD1D"
-  isLefthand: 0
   hand: {fileID: 4512714918657851343, guid: 9906c7375f48c0f40ae52167472f7abe, type: 3}
+  isLefthand: 0
   weaponAnimCon: {fileID: 0}
   baseAttackRange: 0
   bullet: {fileID: 5850208310566541409, guid: b0a64927669c19f4e8d797457fe6d63d, type: 3}
@@ -37,5 +37,5 @@ MonoBehaviour:
   DamageArea: {fileID: 0}
   baseAreaSize: 0
   baseAreaTime: 0
-  baseAreaDamage: 0
+  damagePercent: 0
   baseDamageCoolTime: 0

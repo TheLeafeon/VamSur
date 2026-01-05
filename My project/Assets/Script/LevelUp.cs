@@ -1,4 +1,8 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class LevelUp : MonoBehaviour
 {
@@ -37,35 +41,49 @@ public class LevelUp : MonoBehaviour
         rect.localScale = Vector3.zero;
     }
 
+    //레벨업 선택지
     void Next()
     {
+        //초기화
         foreach(Item item in items)
         {
-            item.gameObject.SetActive(false);  
+            item.gameObject.SetActive(false);
         }
 
-        //선택지 3개
-        int[] random = new int[3];
-
-        while(true)
+        List<Item> candidates = new List<Item>();
+        
+        foreach(Item item in items)
         {
-            //전체 랜덤
-            random[0] = Random.Range(0, items.Length);
-            random[1] = Random.Range(0, items.Length);
-            random[2] = Random.Range(0, items.Length);
-
-            //선택지 3개가 겹치지 않을 때
-            if (random[0] != random[1] && random[1] != random[2] && random[0] != random[2])
-                break;
-            
+            //스텟은 무조건 등장
+            if(item.data.itemType  == ItemData.ItemType.State)
+            {
+                candidates.Add(item);
+            }
+            //무기는 장착하고 있는 무기가 4개 이상일 경우 장착하지 않은 무기는 등장하지 않음
+            else if(item.data.itemType == ItemData.ItemType.Weapon)
+            {
+                //장착 무기가 4개 미만인가
+                if(GameManager.instance.EquipWeaponCnt < 4)
+                {
+                    candidates.Add(item);
+                }
+                else if(item.isEquip)
+                {
+                    candidates.Add(item);
+                }
+            }
         }
 
-        for(int i=0;i<random.Length; i++)
+        for(int i = 0; i<3;i++)
         {
-            Item ranItem = items[random[i]];
+            int random = Random.Range(0, candidates.Count);
 
-            ranItem.gameObject.SetActive(true);
+            Item selected = candidates[random];
+
+            selected.gameObject.SetActive(true);
+            candidates.RemoveAt(random); // 중복 방지
         }
+        
 
     }
 }

@@ -7,6 +7,8 @@ public class Item : MonoBehaviour
     public Weapon weapon;
     public int level;
 
+    public bool isEquip= false;
+
     Image icon;
     Text textName;
     Text textFirstDesc;
@@ -53,6 +55,7 @@ public class Item : MonoBehaviour
         }
     }
 
+    //무기 장착부분
     public void OnClick()
     {
         switch(data.itemType)
@@ -79,6 +82,9 @@ public class Item : MonoBehaviour
                 {
                     EquipWeapon();
                     weapon.Init(data);
+                    isEquip = true;
+                    GameManager.instance.EquipWeaponCnt++;
+
                 }
                 else
                 {

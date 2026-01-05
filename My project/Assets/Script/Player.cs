@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [Header("# 이동 관련")]
     public float speed; //이동속도
     public Vector2 inputVec;
-    float baseSpeed;
 
     [Header("# Hand 오브젝트 ")]
     public Hand[] hands;
@@ -35,11 +34,14 @@ public class Player : MonoBehaviour
         hands = GetComponentsInChildren<Hand>(true);
         stats = GetComponent<PlayerStats>();
         anim = GetComponent<PlayerAnimation>();
-        baseSpeed = speed;
     }
 
     void OnMove(InputValue value)
     {
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
 
         inputVec = value.Get<Vector2>();
 
@@ -85,8 +87,6 @@ public class Player : MonoBehaviour
 
     public void PlayerSpawn()
     {
-        stats.StatsReset();
-        speed = baseSpeed;
         gameObject.SetActive(true);
         anim.SetBool("Dead", false);
     }

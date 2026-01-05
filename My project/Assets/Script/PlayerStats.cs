@@ -61,13 +61,6 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void StatsReset()
-    {
-        maxHealth = baseMaxHealth;
-        strength = 1;
-        agility = 1;
-        intelligence = 1;
-    }
 
     private IEnumerator DeadAnimEnd()
     {
